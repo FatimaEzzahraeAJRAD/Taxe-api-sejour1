@@ -11,6 +11,7 @@ import com.sir.taxesejourv1.rest.converter.AbstractConverter;
 import com.sir.taxesejourv1.rest.converter.TauxTaxeSejourConverter;
 import com.sir.taxesejourv1.rest.vo.TauxTaxeSejourVo;
 import com.sir.taxesejourv1.service.TauxTaxeSejourService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,6 +57,14 @@ public class TauxTaxeSejourRest {
         tauxTaxeSejourService.deleteByRefCategorie(refCategorie);
     }
  
+    
+     @GetMapping("/dateDebutAsDate/{dateDebutAsDate}/dateFinAsDate/{dateFinAsDate}")
+    public List<TauxTaxeSejourVo> findByCriteria(@PathVariable String dateDebutAsDate,@PathVariable String dateFinAsDate){
+        return abstractConverter.toVo(tauxTaxeSejourService.findByCriteria(dateDebutAsDate, dateFinAsDate));
+    }
+    
+    
+    
 
     public TauxTaxeSejourDao getTauxTaxeSejourDao() {
         return tauxTaxeSejourDao;

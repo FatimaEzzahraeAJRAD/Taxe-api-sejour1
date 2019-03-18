@@ -5,6 +5,7 @@
  */
 package com.sir.taxesejourv1.serviceImpl;
 
+import com.sir.taxesejourV1.util.DateUtil;
 import com.sir.taxesejourv1.bean.TauxTaxeSejour;
 import com.sir.taxesejourv1.dao.TauxTaxeSejourDao;
 import com.sir.taxesejourv1.service.TauxTaxeSejourService;
@@ -25,20 +26,19 @@ public class TauxTaxeSejourServiceImpl implements TauxTaxeSejourService {
 
     @Override
     public TauxTaxeSejour findByRefCategorie(String refCategorie) {
-        return  tauxTaxeSejourDao.findByRefCategorie(refCategorie);
+        return tauxTaxeSejourDao.findByRefCategorie(refCategorie);
     }
 
     @Override
     public int saveTauxTaxeSejour(TauxTaxeSejour tauxTaxeSejour) {
-        if(tauxTaxeSejour==null ){
+        if (tauxTaxeSejour == null) {
             return -1;
-        }else{
-                tauxTaxeSejourDao.save(tauxTaxeSejour);
+        } else {
+            tauxTaxeSejourDao.save(tauxTaxeSejour);
             return 1;
         }
     }
-    
-    
+
     public TauxTaxeSejourDao getTauxTaxeSejourDao() {
         return tauxTaxeSejourDao;
     }
@@ -54,11 +54,15 @@ public class TauxTaxeSejourServiceImpl implements TauxTaxeSejourService {
 
     @Override
     public void deleteByRefCategorie(String refCategorie) {
-        TauxTaxeSejour tauxTaxeSejour= tauxTaxeSejourDao.findByRefCategorie(refCategorie);
-            tauxTaxeSejourDao.delete(tauxTaxeSejour);
-            
-        
-            
-        }
+        TauxTaxeSejour tauxTaxeSejour = tauxTaxeSejourDao.findByRefCategorie(refCategorie);
+        tauxTaxeSejourDao.delete(tauxTaxeSejour);
+
     }
-       
+
+    @Override
+    public List<TauxTaxeSejour> findByCriteria(String dateDebut, String dateFin) {
+        Date dateDebutAsDate = DateUtil.parse(dateDebut);
+        Date dateFinAsDate = DateUtil.parse(dateFin);
+        return tauxTaxeSejourDao.findByCriteria(dateDebutAsDate, dateFinAsDate);
+    }
+}
